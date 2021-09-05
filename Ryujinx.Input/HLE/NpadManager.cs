@@ -35,6 +35,9 @@ namespace Ryujinx.Input.HLE
         private bool _enableMouse;
         private Switch _device;
 
+        private bool _wasTakeScreenshotPressed;
+        public bool IsTakeScreenshotPressed { get; private set; }
+
         public NpadManager(IGamepadDriver keyboardDriver, IGamepadDriver gamepadDriver, IGamepadDriver mouseDriver)
         {
             _controllers = new NpadController[MaxControllers];
@@ -157,6 +160,8 @@ namespace Ryujinx.Input.HLE
         {
             lock (_lock)
             {
+                bool takeScreenshot = false;
+
                 List<GamepadInput> hleInputStates = new List<GamepadInput>();
                 List<SixAxisInput> hleMotionStates = new List<SixAxisInput>(NpadDevices.MaxControllers);
 
@@ -195,6 +200,11 @@ namespace Ryujinx.Input.HLE
                         {
                             hleKeyboardInput = controller.GetHLEKeyboardInput();
                         }
+
+                        if (!takeScreenshot)
+                        {
+                            takeScreenshot = controller.State.IsPressed(GamepadButtonInputId.Misc1);
+                        }
                     }
                     else
                     {
@@ -219,9 +229,9 @@ namespace Ryujinx.Input.HLE
                 _device.Hid.Npads.Update(hleInputStates);
                 _device.Hid.Npads.UpdateSixAxis(hleMotionStates);
 
-                if (hleKeyboardInput.HasValue)
+                if (hleKeyboardInput is KeyboardInput rHleKeyboardInput)
                 {
-                    _device.Hid.Keyboard.Update(hleKeyboardInput.Value);
+                    _device.Hid.Keyboard.Update(rHleKeyboardInput);
                 }
 
                 if (_enableMouse)
@@ -267,6 +277,17 @@ namespace Ryujinx.Input.HLE
                 }
 
                 _device.TamperMachine.UpdateInput(hleInputStates);
+
+                if (_wasTakeScreenshotPressed)
+                {
+                    IsTakeScreenshotPressed = false;
+                    _wasTakeScreenshotPressed = takeScreenshot;
+                }
+                else if (takeScreenshot)
+                {
+                    IsTakeScreenshotPressed = true;
+                    _wasTakeScreenshotPressed = true;
+                }
             }
         }
 

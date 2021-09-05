@@ -169,6 +169,7 @@ namespace Ryujinx.Input.GTK3
                 _buttonsUserMapping.Add(new ButtonMappingEntry(GamepadButtonInputId.LeftTrigger, (Key)_configuration.LeftJoycon.ButtonZl));
                 _buttonsUserMapping.Add(new ButtonMappingEntry(GamepadButtonInputId.SingleRightTrigger0, (Key)_configuration.LeftJoycon.ButtonSr));
                 _buttonsUserMapping.Add(new ButtonMappingEntry(GamepadButtonInputId.SingleLeftTrigger0, (Key)_configuration.LeftJoycon.ButtonSl));
+                _buttonsUserMapping.Add(new ButtonMappingEntry(GamepadButtonInputId.Misc1, (Key)_configuration.LeftJoycon.Screenshot));
 
                 // Finally right joycon
                 _buttonsUserMapping.Add(new ButtonMappingEntry(GamepadButtonInputId.RightStick, (Key)_configuration.RightJoyconStick.StickButton));

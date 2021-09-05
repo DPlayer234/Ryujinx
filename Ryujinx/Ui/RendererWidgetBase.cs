@@ -565,6 +565,7 @@ namespace Ryujinx.Ui
             }
 
             NpadManager.Update(ConfigurationState.Instance.Graphics.AspectRatio.Value.ToFloat());
+            if (NpadManager.IsTakeScreenshotPressed) ScreenshotRequested = true;
 
             if ((Toplevel as MainWindow).IsFocused)
             {

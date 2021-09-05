@@ -150,7 +150,8 @@ namespace Ryujinx.Headless.SDL2
                             ButtonL      = Key.E,
                             ButtonZl     = Key.Q,
                             ButtonSl     = Key.Unbound,
-                            ButtonSr     = Key.Unbound
+                            ButtonSr     = Key.Unbound,
+                            Screenshot   = Key.F12
                         },
 
                         LeftJoyconStick  = new JoyconConfigKeyboardStick<Key>
@@ -209,6 +210,7 @@ namespace Ryujinx.Headless.SDL2
                             ButtonZl     = ConfigGamepadInputId.LeftTrigger,
                             ButtonSl     = ConfigGamepadInputId.Unbound,
                             ButtonSr     = ConfigGamepadInputId.Unbound,
+                            Screenshot   = ConfigGamepadInputId.Misc1
                         },
 
                         LeftJoyconStick = new JoyconConfigControllerStick<ConfigGamepadInputId, ConfigStickInputId>
