@@ -892,7 +892,7 @@ namespace Ryujinx.Graphics.Gpu.Image
                 {
                     _physicalMemory.Write(Range, GetTextureDataFromGpu(Span<byte>.Empty, true, texture));
                 }
-                else 
+                else
                 {
                     _physicalMemory.WriteUntracked(Range, GetTextureDataFromGpu(Span<byte>.Empty, false, texture));
                 }
@@ -1235,6 +1235,8 @@ namespace Ryujinx.Graphics.Gpu.Image
                 IsModified = true;
                 Group.SignalModified(this, !wasModified);
             }
+
+            _physicalMemory.TextureCache.Lift(this);
         }
 
         /// <summary>
@@ -1251,6 +1253,8 @@ namespace Ryujinx.Graphics.Gpu.Image
                 IsModified = true;
                 Group.SignalModifying(this, bound, !wasModified);
             }
+
+            _physicalMemory.TextureCache.Lift(this);
 
             if (bound)
             {
